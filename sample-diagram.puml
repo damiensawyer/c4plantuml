@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+System_Boundary(users, "All Usees") {
+Person(user, "User", "A user of my system")
+Person(user2, "User2 ", "A user of my system with long hair")
+}
+System_Boundary(c1, "Inplay") {
+    Container(web_app, "Web Application", "Java, Spring Boot", "Handles all user requests.")
+    ContainerDb(db, "Database", "Relational Database", "Stores user registration information, hashed passwords, access logs, etc.")
+}
+
+System_Boundary(c2, "My super System") {
+    Container(web_app, "Web Application", "Java, Spring Boot", "Handles all user requests.")
+    Container(web_app2, "Web Application 2", "Java, Spring Boot", "Handles all user requests.")
+    ContainerDb(db, "Database", "Relational Database", "Stores user registration information, hashed passwords, access logs, etc.")
+}
+
+Rel(user, web_app, "Uses", "HTTPS")
+Rel(user2, web_app2, "Uses", "HTTPS")
+Rel(user, user2, "Marries", "Dating Service")
+Rel(web_app, web_app2, "does stuff", "REST")
+Rel(web_app, db, "Reads/Writes")
+Rel(web_app2, db, "Reads/Writes")
+@enduml
